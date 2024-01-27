@@ -1,7 +1,7 @@
 pipeline {
-    agent { label 'Jenkins-Agent' }
-    tools {
-        jdk 'Java17'
+    agent { label 'EC2_Jenkins_Agent' } //Slaves on which you want to run your pipeline on 
+    tools {    // plugins which we installed 
+        jdk 'Java17'   // Name which we gave in tools for the plugin 
         maven 'Maven3'
     }
     environment {
@@ -22,20 +22,21 @@ pipeline {
 
         stage("Checkout from SCM"){
                 steps {
-                    git branch: 'main', credentialsId: 'github', url: 'https://github.com/Ashfaque-9x/register-app'
+                    git branch: 'main', credentialsId: 'Github', url: 'https://github.com/bvr98/register-app'
+			// branch       git credentials which we configured in Jenkins Credentails     URL: git repo
                 }
         }
 
         stage("Build Application"){
             steps {
-                sh "mvn clean package"
+                sh "mvn clean package" // cleans and packages the application into binary file jar/war
             }
 
        }
 
        stage("Test Application"){
            steps {
-                 sh "mvn test"
+                 sh "mvn test" // runs the test cases 
            }
        }
 
