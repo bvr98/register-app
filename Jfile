@@ -40,7 +40,7 @@ pipeline {
            }
        }
 
-       stage("SonarQube Analysis"){
+     stage("SonarQube Analysis"){
            steps {
 	           script {
 		        withSonarQubeEnv(credentialsId: 'jenkins-sonarqube-token') { 
@@ -54,6 +54,10 @@ pipeline {
            steps {
                script {
                     waitForQualityGate abortPipeline: false, credentialsId: 'jenkins-sonarqube-token'
+
+// By setting up the webhook in SonarQube, you establish the communication channel between SonarQube and Jenkins. When the Quality Gate is evaluated, 
+// SonarQube sends a webhook notification to Jenkins, and the waitForQualityGate step in the Jenkins pipeline waits for and processes this notification, 
+// making decisions based on the Quality Gate results. */
                 }	
             }
 
