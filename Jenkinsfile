@@ -39,6 +39,25 @@ pipeline {
                  sh "mvn test" // runs the test cases 
            }
        }
+	    stage("SonarQube Analysis"){
+           steps {
+	           script {
+		        withSonarQubeEnv(credentialsId: 'jenkins-sonarqube-token') { 
+                        sh "mvn sonar:sonar" // Runs the code quality analysis on the project
+		        }
+	           }	
+           }
+       }
+
+       stage("Quality Gate"){
+           steps {
+               script {
+                    waitForQualityGate abortPipeline: false, credentialsId: 'jenkins-sonarqube-token'
+                     //checks for the quality gate condition, which is sent my a webhook SQ->Jenkins, if pass pipeline continues if fails abort.
+                }	
+            }
+
+        }
     }
 
     
