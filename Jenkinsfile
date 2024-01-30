@@ -1,7 +1,7 @@
 pipeline {
     agent { label 'EC2_Jenkins_Agent' } //Slaves on which you want to run your pipeline on 
     tools {    // plugins which we installed 
-        jdk 'Java17'   // Name which we gave in tools for the plugin 
+        jdk 'Java 17'   // Name which we gave in tools for the plugin 
         maven 'Maven3'
     }
     // environment {
